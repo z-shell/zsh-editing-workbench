@@ -20,7 +20,7 @@ CONFIG_DIR="$HOME/.config/zew"
 
 if [[ ${zsh_loaded_plugins[-1]} != */zsh-editing-workbench && -z ${fpath[(r)${0:h}]} ]]
 then
-    fpath+=( "${0:h}" )
+  fpath+=( "${0:h}" )
 fi
 
 #
@@ -28,20 +28,20 @@ fi
 #
 
 if ! test -d "$HOME/.config"; then
-    mkdir "$HOME/.config"
+  mkdir "$HOME/.config"
 fi
 
 if ! test -d "$CONFIG_DIR"; then
-    mkdir "$CONFIG_DIR"
+  mkdir "$CONFIG_DIR"
 fi
 
 set zew.conf
 
 local i
 for i; do
-    if ! test -f "$CONFIG_DIR/$i"; then
-        cp "$ZEW_REPO_DIR/.config/zew/$i" "$CONFIG_DIR"
-    fi
+  if ! test -f "$CONFIG_DIR/$i"; then
+    cp "$ZEW_REPO_DIR/.config/zew/$i" "$CONFIG_DIR"
+  fi
 done
 
 #
@@ -115,9 +115,9 @@ bindkey "^[H" zew-history-complete-word-backwards
 
 # 10. Break line
 if [[ "$MC_SID" != "" || "$MC_CONTROL_PID" != "" ]]; then
-    bindkey "^J" accept-line
+  bindkey "^J" accept-line
 else
-    bindkey "^J" self-insert
+  bindkey "^J" self-insert
 fi
 
 # 11. Undo
