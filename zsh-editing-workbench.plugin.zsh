@@ -7,20 +7,23 @@
 # to ~/.zshrc.
 #
 
-0="${${ZERO:-${0:#$ZSH_ARGZERO}}:-${(%):-%N}}"
+# https://wiki.zshell.dev/community/zsh_plugin_standard#zero-handling
+0="${ZERO:-${${0:#$ZSH_ARGZERO}:-${(%):-%N}}}"
 0="${${(M)0:#/*}:-$PWD/$0}"
-ZEW_REPO_DIR="${0:h}"
+
+typeset -gA Plugins
+Plugins[ZEW_DIR]="${0:h}"
 CONFIG_DIR="$HOME/.config/zew"
 
 #
-# Update FPATH if:
+# Updates FPATH if:
 # 1. Not loading with a plugin manager
 # 2. Not having fpath already updated
 #
 
-if [[ ${zsh_loaded_plugins[-1]} != */zsh-editing-workbench && -z ${fpath[(r)${0:h}]} ]]
-then
-  fpath+=( "${0:h}" )
+# https://wiki.zshell.dev/community/zsh_plugin_standard#functions-directory
+if [[ $PMSPEC != *f* ]]; then
+  fpath+=( "${0:h}/functions" )
 fi
 
 #
@@ -28,11 +31,11 @@ fi
 #
 
 if ! test -d "$HOME/.config"; then
-  mkdir "$HOME/.config"
+  command mkdir "$HOME/.config"
 fi
 
 if ! test -d "$CONFIG_DIR"; then
-  mkdir "$CONFIG_DIR"
+  command mkdir "$CONFIG_DIR"
 fi
 
 set zew.conf
@@ -40,7 +43,7 @@ set zew.conf
 local i
 for i; do
   if ! test -f "$CONFIG_DIR/$i"; then
-    cp "$ZEW_REPO_DIR/.config/zew/$i" "$CONFIG_DIR"
+    command cp "$Plugins[ZEW_DIR]/.config/zew/$i" "$CONFIG_DIR"
   fi
 done
 
