@@ -1,7 +1,9 @@
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
 # Displays help on Zew provided actions. Lines are 72 characters long
 
-autoload colors
-colors
+autoload colors; colors
 
 local h1="$fg_bold[magenta]"
 local h2="$fg_bold[green]"
@@ -70,4 +72,3 @@ characters.
 "
 
 export LESS="$LESS_bkp"
-

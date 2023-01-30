@@ -1,3 +1,6 @@
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
 # Input:
 # $1 - optional buffer to process (default is $BUFFER)
 # $2 - optional parameter containing cursor (default is $CURSOR)
@@ -11,10 +14,11 @@
 # ZEW_PB_RIGHT - right part of active word
 #
 
-emulate -LR zsh
-setopt typesetsilent extendedglob noshortloops
+builtin emulate -L zsh ${=${options[xtrace]:#off}:+-o xtrace}
+builtin setopt extended_glob warn_create_global typeset_silent no_short_loops rc_quotes no_auto_pushd
 
-local MBEGIN MEND MATCH mbegin mend match
+local MATCH; integer MBEGIN MEND
+local -a match mbegin mend
 
 local buf="${1:-$BUFFER}"
 local cursor="${2:-$CURSOR}"
@@ -69,7 +73,7 @@ for (( i=1; i<=nwords; i++ )); do
   MATCH=""
   buf="${buf#(#m)$word}"
 
-  # If shell word not found, return. This shoudln't happen
+  # If shell word not found, return. This shouldn't happen
   [ -z "$MATCH" ] && return 0
 
   # Spaces point to previous shell word

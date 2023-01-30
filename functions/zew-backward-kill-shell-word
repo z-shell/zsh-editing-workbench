@@ -1,3 +1,5 @@
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
 #
 # Copyright (c) 2016 Daniel Shahaf
 #
@@ -23,9 +25,10 @@
 # THE SOFTWARE.
 #
 # Modifications Copyright (c) 2016 Sebastian Gniazdowski
-# Modifications Copyright (c) 2021 Salvydas Luksosius
+# Modifications Copyright (c) 2021 Salvydas Lukosius
 
 local MATCH; integer MBEGIN MEND
+local -a match mbegin mend
 integer start end_of_word end_of_cut=$CURSOR
 
 # Walk backwards to an end-of-word
@@ -44,10 +47,10 @@ integer start end_of_word end_of_cut=$CURSOR
   (( start = end_of_word - ${#a[-1]} + 1 ))
 }
 
-# Standard kill-widget behaviour
+# Standard kill-widget behavior
 autoload -Uz is-at-least
 if is-at-least 5.2; then
-    zle -f 'kill'
+  zle -f 'kill'
 fi
 
 if [[ $LASTWIDGET == *'kill'* ]]; then

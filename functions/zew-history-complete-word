@@ -1,5 +1,8 @@
-emulate -LR zsh
-setopt typesetsilent extendedglob noshortloops
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+
+builtin emulate -L zsh ${=${options[xtrace]:#off}:+-o xtrace}
+builtin setopt extended_glob warn_create_global typeset_silent no_short_loops rc_quotes no_auto_pushd
 
 # When an error, then no cursor keys bindings
 zmodload zsh/terminfo 2>/dev/null
@@ -9,8 +12,11 @@ zmodload zsh/termcap 2>/dev/null
 local ZEW_PB_WORDS ZEW_PB_WORDS_BEGINNINGS ZEW_PB_SPACES
 local ZEW_PB_SELECTED_WORD ZEW_PB_LEFT ZEW_PB_RIGHT
 
-typeset -g __zew_hcw_index __zew_hcw_left __zew_hcw_right
-typeset -g __zew_hcw_widget_name __zew_hcw_restart __zew_hcw_call_count
+local MATCH; integer MBEGIN MEND
+local -a match mbegin mend
+
+typeset -g __zew_hcw_index __zew_hcw_left __zew_hcw_right __zew_hcw_call_count
+typeset -g __zew_hcw_widget_name __zew_hcw_restart __zew_hcw_finished
 typeset -gaU __zew_hcw_found
 
 (( __zew_hcw_call_count ++ ))
@@ -150,6 +156,6 @@ if [ "$__zew_hcw_call_count" -eq "1" ]; then
   zle -A saved-backward-delete-char backward-delete-char
   zle -A saved-delete-char delete-char
   zle -D saved-self-insert saved-backward-delete-char saved-delete-char
-  # Full reinitialisation at next call
+  # Full initialization at next call
   __zew_hcw_call_count="0"
 fi

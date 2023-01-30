@@ -1,10 +1,15 @@
+# -*- mode: zsh; sh-indentation: 2; indent-tabs-mode: nil; sh-basic-offset: 2; -*-
+# vim: ft=zsh sw=2 ts=2 et
+#
 # Transpose shell-words, i.e. parts of lines obtained by (Z) flag, i.e. as if zsh parsed the line.
 #
 # Code to activate the functionality with binding to Alt-t: autoload zew-transpose-shell-words
 # zle -N zew-transpose-shell-words bindkey "^[t" zew-transpose-shell-words
 
 local curcontext=":zle:$WIDGET"
-local MATCH MBEGIN MEND i
+
+local MATCH; integer MBEGIN MEND
+local -a match mbegin mend i
 
 # Prepare output variables for zew-process-buffer
 local ZEW_PB_WORDS ZEW_PB_WORDS_BEGINNINGS ZEW_PB_SPACES
