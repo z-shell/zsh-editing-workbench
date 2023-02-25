@@ -8,6 +8,7 @@ on:
 
 jobs:
   lock:
+    if: github.repository.owner == 'z-shell'
     name: 🔐 Lock closed issues and PRs
     runs-on: ubuntu-latest
     permissions:
@@ -18,7 +19,7 @@ jobs:
     steps:
       - uses: dessant/lock-threads@v4
         with:
-          github-token: ${{ github.token }}
+          github-token: ${{ secrets.ORG_TOKEN }}
           issue-inactive-days: "30"
           issue-lock-reason: ""
           issue-comment: >
